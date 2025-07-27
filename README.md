@@ -1,4 +1,4 @@
-# Web Automation Test Suite
+# Web Automation Test
 
 A Selenium-based test automation for web application testing.
 
@@ -48,7 +48,7 @@ HEADLESS=true python lectra_automation.py
 - `timeout=10`: Adjust wait timeouts (seconds)
 - Logging level can be modified in the class initialization
 
-## Project Structure
+## Structure
 
 ```
 ├── lectra_automation.py    
