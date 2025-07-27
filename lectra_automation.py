@@ -107,12 +107,12 @@ class LectraTestAutomation:
         """Find element using multiple selector strategies."""
         for selector in selectors:
             try:
-                if selector.startswith("#"):
+                if selector.startswith("#") or selector.startswith("."):
                     element = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, selector)))
-                elif selector.startswith("//") or selector.startswith("."):
+                elif selector.startswith("/") or selector.startswith("("):
                     element = self.wait.until(EC.element_to_be_clickable((By.XPATH, selector)))
                 else:
-                    element = self.wait.until(EC.element_to_be_clickable((By.XPATH, selector)))
+                    element = self.wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, selector)))
                 
                 self.logger.info(f"Found {description} using selector: {selector}")
                 return element
