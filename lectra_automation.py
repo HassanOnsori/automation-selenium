@@ -346,7 +346,7 @@ class LectraTestAutomation:
         self.logger.info("Scrolling to find 'View job openings' button")
         for i in range(8):
             self.driver.execute_script("window.scrollBy(0, 1000);")
-            self._human_like_delay(1, 2)
+            self._human_like_delay(0.5, 1)
         
         view_job_selectors = [
             '//*[@id="block-lectra-b5-content"]//a[contains(text(), "View job openings")]',
@@ -367,7 +367,7 @@ class LectraTestAutomation:
         # Scroll to find Our job opportunities
         for i in range(2):
             self.driver.execute_script("window.scrollBy(0, 500);")
-            self._human_like_delay(1, 2)
+            self._human_like_delay(0.5, 1)
         
         job_opp_selectors = [
             '//a[@href="https://careers.lectra.com/" and contains(@class, "gtm-cta")]',

@@ -8,13 +8,13 @@ A Selenium-based test automation for web application testing.
 - Robust error handling and retry mechanisms
 - Configurable headless/visible browser modes
 - Human-like interaction patterns
-- Comprehensive logging and reporting
+- Logging and reporting
 - Anti-bot detection measures
 
 ## Setup
 
 ### Prerequisites
-- Python 3.8+
+- Python 3.13+
 - Chrome browser
 
 ### Installation
@@ -51,10 +51,10 @@ HEADLESS=true python lectra_automation.py
 ## Project Structure
 
 ```
-├── lectra_automation.py    # Main test automation class
-├── requirements.txt        # Python dependencies
-├── README.md              # This file
-└── .gitignore            # Git ignore patterns
+├── lectra_automation.py    
+├── requirements.txt        
+├── README.md             
+└── .gitignore           
 ```
 
 ## Test Scenario
@@ -66,9 +66,3 @@ The automation covers a web navigation scenario including:
 - Menu navigation
 - Form interactions
 - Tab management
-
-## Notes
-
-- Tests are designed to handle dynamic web elements
-- Includes fallback strategies for element location
-- Supports both local development and CI/CD integration
