@@ -14,7 +14,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 class LectraTestAutomation:
     """
     Test automation class for Lectra website scenario testing.
-    Implements Page Object Model principles and robust error handling.
     """
     
     def __init__(self, headless=False, timeout=10):
