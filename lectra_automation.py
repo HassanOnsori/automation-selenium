@@ -446,9 +446,12 @@ class LectraTestAutomation:
             
             first_job = self._find_element_by_selectors(first_job_selectors, "First job opportunity")
             if first_job and self._safe_click(first_job, "First job opportunity"):
-                self._human_like_delay()
+                for i in range(3):
+                    self.driver.execute_script("window.scrollBy(0, 400);")
+                    self._human_like_delay(1, 2)
                 
                 # Close job details tab and return to original
+                self._human_like_delay()
                 self.logger.info("Closing job details tab...")
                 self.driver.close()
                 self.driver.switch_to.window(self.original_window)

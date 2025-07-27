@@ -1,0 +1,49 @@
+# Python-specific ignores
+# ========================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+
+# Distribution / packaging
+.Python
+build/
+dist/
+develop-eggs/
+*.egg-info/
+.eggs/
+
+# Environments
+.env/
+venv/
+env/
+.qavenv/ 
+
+# Editors
+# ========
+# VS Code
+.vscode/                 # VS Code settings and launch configurations
+.DS_Store                # macOS system files
+*~                       # Backup files from various editors
+
+# Selenium/WebDriver related
+# ===========================
+# Logs
+*.log
+
+# WebDriver binaries managed by webdriver-manager (often downloaded to user home or project)
+# If ChromeDriverManager downloads to project root, ignore them.
+# Common paths for WebDriverManager downloads:
+# ~/.wdm/
+# If you explicitly save the driver executable in your project root, add its name here.
+# For example, if you save it as 'chromedriver' in your project root:
+# chromedriver
+# geckodriver
+# msedgedriver
+
+
+
+# Specific to macOS
+.DS_Store
+.localized

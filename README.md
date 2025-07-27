@@ -1,10 +1,10 @@
 # Web Automation Test Suite
 
-A Selenium-based test automation framework for web application testing.
+A Selenium-based test automation for web application testing.
 
 ## Features
 
-- Object-oriented test architecture with Page Object Model
+- Object-oriented test architecture with modular design
 - Robust error handling and retry mechanisms
 - Configurable headless/visible browser modes
 - Human-like interaction patterns
