@@ -365,8 +365,8 @@ class LectraTestAutomation:
     def _navigate_to_job_opportunities(self):
         """Navigate to job opportunities page."""
         # Scroll to find Our job opportunities
-        for i in range(3):
-            self.driver.execute_script("window.scrollBy(0, 250);")
+        for i in range(2):
+            self.driver.execute_script("window.scrollBy(0, 500);")
             self._human_like_delay(1, 2)
         
         job_opp_selectors = [
@@ -446,9 +446,8 @@ class LectraTestAutomation:
             
             first_job = self._find_element_by_selectors(first_job_selectors, "First job opportunity")
             if first_job and self._safe_click(first_job, "First job opportunity"):
-                for i in range(3):
-                    self.driver.execute_script("window.scrollBy(0, 400);")
-                    self._human_like_delay(1, 2)
+                self._human_like_delay()
+                
                 
                 # Close job details tab and return to original
                 self._human_like_delay()
