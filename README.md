@@ -38,7 +38,7 @@ pip install -r requirements.txt
 # Run with visible browser (development/debugging)
 python lectra_automation.py
 
-# Run in headless mode
+# Run in headless mode will be implemented soon
 HEADLESS=true python lectra_automation.py
 ```
 
