@@ -21,8 +21,8 @@ A Selenium-based test automation framework for web application testing.
 
 ```bash
 # Clone the repository
-git clone <repository-url>
-cd <repository-name>
+git clone https://github.com/HassanOnsori/exercise.git
+cd exercise
 
 # Create virtual environment
 python3 -m venv .qavenv
