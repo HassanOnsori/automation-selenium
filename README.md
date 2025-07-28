@@ -5,11 +5,11 @@ A Selenium-based test automation for web application testing.
 ## Features
 
 - Object-oriented test architecture with modular design
-- Robust error handling and retry mechanisms
-- Configurable headless/visible browser modes
 - Human-like interaction patterns
 - Logging and reporting
 - Anti-bot detection measures
+- Robust error handling
+- Configurable headless/visible browser modes (headless mode will be implemented soon)
 
 ## Setup
 
