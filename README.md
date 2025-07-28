@@ -42,12 +42,6 @@ python lectra_automation.py
 HEADLESS=true python lectra_automation.py
 ```
 
-## Configuration
-
-- `headless=False/True`: Control browser visibility
-- `timeout=10`: Adjust wait timeouts (seconds)
-- Logging level can be modified in the class initialization
-
 ## Structure
 
 ```
