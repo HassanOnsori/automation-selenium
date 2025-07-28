@@ -148,12 +148,7 @@ class LectraTestAutomation:
         """Handle Google cookie consent if present."""
         self.logger.info("Checking for Google cookie consent...")
         
-        selectors = [
-            "//button[contains(text(), 'Accept all')]",
-            "#L2AGLb"
-        ]
-        
-        cookie_button = self._find_element_by_selectors(selectors, "Google cookie consent")
+        cookie_button = self.wait.until(EC.presence_of_element_located((By.ID, "L2AGLb")))
         if cookie_button:
             return self._safe_click(cookie_button, "Google cookie consent")
         else:
@@ -183,8 +178,10 @@ class LectraTestAutomation:
         self.logger.info("=== Step 3: Navigating to Lectra website ===")
         
         selectors = [
-            "//a[contains(@href, 'lectra.com') and not(contains(@href, 'careers'))]",
+            "//a[contains(@href, 'lectra.com')]//h3[@class='LC20lb MBeuO DKV0Md']",
             "//h3[contains(text(), 'Lectra')]/parent::a",
+            "//a[contains(@href, 'lectra.com') and not(contains(@href, 'careers'))]"
+            
         ]
         
         lectra_link = self._find_element_by_selectors(selectors, "Lectra website link")
@@ -227,7 +224,8 @@ class LectraTestAutomation:
         # Click Languages button
         language_selectors = [
             '//*[@id="block-lectra-b5-languageswitcherinterfacetext-2"]/button',
-            '//button[contains(text(), "Languages")]'
+            '//button[contains(text(), "Languages")]',
+            "div[id='block-lectra-b5-languageswitcherinterfacetext-2'] button"
         ]
         
         language_button = self._find_element_by_selectors(language_selectors, "Languages button")
@@ -238,9 +236,8 @@ class LectraTestAutomation:
         
         # Click English option
         english_selectors = [
-            '//*[@id="block-lectra-b5-languageswitcherinterfacetext-2"]/div/ul/li[1]/a',
-            '//a[@hreflang="en" and contains(text(), "English")]',
-            '//a[@class="language-link" and @hreflang="en"]'
+            '//div[@id="block-lectra-b5-languageswitcherinterfacetext-2"]//a[normalize-space()="English"]',
+            '//a[@hreflang="en" and @href="/en" and contains(text(), "English") and @class="language-link"]'
         ]
         
         english_link = self._find_element_by_selectors(english_selectors, "English language option")
@@ -256,7 +253,6 @@ class LectraTestAutomation:
         
         # Click Fashion button
         fashion_selectors = [
-            '//*[@id="block-lectra-b5-mainnavigation"]/ul/li[1]/button',
             '//button[contains(text(), "Fashion")]'
         ]
         
@@ -268,8 +264,8 @@ class LectraTestAutomation:
         
         # Click Lectra & Fashion
         lectra_fashion_selectors = [
-            '//*[@id="block-lectra-b5-mainnavigation"]/ul/li[1]/div/div/div[1]/ul/li[1]/a',
-            '//a[@href="/en/fashion" and contains(text(), "Lectra")]'
+            '//a[normalize-space()="Lectra & Fashion"]',
+            '//a[@href="/en/fashion" and contains(text(), "Lectra & Fashion")]'
         ]
         
         lectra_fashion_link = self._find_element_by_selectors(lectra_fashion_selectors, "Lectra & Fashion link")
@@ -285,8 +281,8 @@ class LectraTestAutomation:
         
         # Click Automotive
         automotive_selectors = [
-            '//*[@id="block-lectra-b5-mainnavigation"]/ul/li[2]/button',
-            '//button[contains(text(), "Automotive")]'
+            '//button[contains(text(), "Automotive")]',
+            '//*[@id="block-lectra-b5-mainnavigation"]/ul/li[2]/button'
         ]
         
         automotive_button = self._find_element_by_selectors(automotive_selectors, "Automotive button")
@@ -297,8 +293,8 @@ class LectraTestAutomation:
         
         # Click Furniture
         furniture_selectors = [
-            '//*[@id="block-lectra-b5-mainnavigation"]/ul/li[3]/button',
-            '//button[contains(text(), "Furniture")]'
+            '//button[contains(text(), "Furniture")]',
+            '//*[@id="block-lectra-b5-mainnavigation"]/ul/li[3]/button'
         ]
         
         furniture_button = self._find_element_by_selectors(furniture_selectors, "Furniture button")
@@ -314,8 +310,8 @@ class LectraTestAutomation:
         
         # Click About Us
         about_selectors = [
-            '//*[@id="block-lectra-b5-headersecondarynavigation-2"]/ul/li[1]/button',
-            '//button[contains(text(), "About us")]'
+            '//div[@id="block-lectra-b5-headernavigation"]//button[@type="button"][normalize-space()="About us"]',
+            'button[class="nav-link dropdown-toggle ext-highlight"]'
         ]
         
         about_button = self._find_element_by_selectors(about_selectors, "About us button")
@@ -326,7 +322,8 @@ class LectraTestAutomation:
         
         # Click Discover Lectra
         discover_selectors = [
-            '//*[@id="block-lectra-b5-headersecondarynavigation-2"]/ul/li[1]/div/ul/li[1]/a',
+            '//div[@id="block-lectra-b5-headernavigation"]//ul//a[@class="nav-link"][normalize-space()="Discover Lectra"]',
+            'div[id="block-lectra-b5-headernavigation"] ul a[class="nav-link ext-highlight"]',
             '//a[@href="/en/discover-lectra" and contains(text(), "Discover Lectra")]'
         ]
         
@@ -349,7 +346,7 @@ class LectraTestAutomation:
         
         view_job_selectors = [
             '//*[@id="block-lectra-b5-content"]//a[contains(text(), "View job openings")]',
-            '//*[@id="block-lectra-b5-content"]/article/div/div[2]/div[7]/div/div/div/div/div[1]/div[2]/div[2]/a'
+            'div[class="background--greige layout layout--onecol"] a[class="gtm-cta"]'
         ]
         
         view_job_button = self._find_element_by_selectors(view_job_selectors, "View job openings button")
@@ -370,8 +367,7 @@ class LectraTestAutomation:
         
         job_opp_selectors = [
             '//a[@href="https://careers.lectra.com/" and contains(@class, "gtm-cta")]',
-            '//a[contains(text(), "Our job opportunities")]',
-            '//*[@id="block-lectra-b5-content"]/article/div/div[2]/div[1]/div/div/div/div/div/div[2]/div[2]/a'
+            '//a[contains(text(), "Our job opportunities")]'
         ]
         
         self.original_window = self.driver.current_window_handle
@@ -424,9 +420,7 @@ class LectraTestAutomation:
         # Click Search jobs
         search_selectors = [
             '//*[@id="search-wrapper"]/div/form/div/div/div[2]/div[2]/div[1]/input',  
-            '//input[@type="submit" and @class="btn keywordsearch-button" and @value="Search jobs"]',  
-            '//input[@class="btn keywordsearch-button" and @value="Search jobs"]',  
-            '//input[@type="submit" and @value="Search jobs"]' 
+            '//input[@type="submit" and @class="btn keywordsearch-button" and @value="Search jobs"]'
         ]
         
         search_button = self._find_element_by_selectors(search_selectors, "Search jobs button")
@@ -439,8 +433,7 @@ class LectraTestAutomation:
             self._human_like_delay()
             
             first_job_selectors = [
-                '//table[@id="searchresults"]//tbody/tr[1]/td[@class="colTitle"]',
-                '//td[@class="colTitle"]/span/a[@class="jobTitle-link"]'
+                '//table[@id="searchresults"]//tbody/tr[1]/td[@class="colTitle"]'
             ]
             
             first_job = self._find_element_by_selectors(first_job_selectors, "First job opportunity")
