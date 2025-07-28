@@ -68,6 +68,16 @@ class LectraTestAutomation:
         except Exception as e:
             self.logger.error(f"Failed to initialize Chrome driver: {str(e)}")
             raise
+
+    def assert_condition(self, condition, message):
+        """Custom assertion with logging."""
+        try:
+            assert condition, message
+            self.logger.info(f"✓ ASSERTION PASSED: {message}")
+            return True
+        except AssertionError as e:
+            self.logger.error(f"✗ ASSERTION FAILED: {str(e)}")
+            raise
     
     def _safe_click(self, element, description="element"):
         """Safely click an element with retry logic."""
@@ -139,6 +149,19 @@ class LectraTestAutomation:
         self.logger.info("=== Step 1: Opening Google Search ===")
         try:
             self.driver.get("https://www.google.com")
+
+            # Verify Google page loaded
+            self.assert_condition(
+                "google.com" in self.driver.current_url.lower(),
+                "Google homepage URL verification"
+            )
+            
+            # Verify page title contains Google
+            self.assert_condition(
+                "google" in self.driver.title.lower(),
+                "Google homepage title verification"
+            )
+
             return True
         except Exception as e:
             self.logger.error(f"Failed to open Google: {str(e)}")
@@ -150,7 +173,17 @@ class LectraTestAutomation:
         
         cookie_button = self.wait.until(EC.presence_of_element_located((By.ID, "L2AGLb")))
         if cookie_button:
-            return self._safe_click(cookie_button, "Google cookie consent")
+            success = self._safe_click(cookie_button, "Google cookie consent")
+            if success:
+                    # Verify cookie banner is gone
+                    time.sleep(1)
+                    # Verify search box is present
+                    search_box = self.wait.until(EC.presence_of_element_located((By.NAME, "q")))
+                    self.assert_condition(
+                        search_box is not None,
+                        "Google search box presence verification and Google cookie banner removal verification"
+                    )
+            return success 
         else:
             self.logger.info("No Google cookie consent found or already handled")
             return True
@@ -160,12 +193,25 @@ class LectraTestAutomation:
         self.logger.info("=== Step 2: Searching for Lectra ===")
         try:
             search_box = self.wait.until(EC.presence_of_element_located((By.NAME, "q")))
+
+            # Verify search box is interactable
+            self.assert_condition(
+                search_box.is_enabled(),
+                "Search box interactability verification"
+            )
+
             self._type_naturally(search_box, "Lectra")
             self._human_like_delay(1, 2)
             search_box.send_keys(Keys.RETURN)
             
             # Wait for search results
             self.wait.until(EC.presence_of_element_located((By.ID, "search")))
+
+            # Verify URL shows search was performed
+            self.assert_condition(
+                "search?q=" in self.driver.current_url,
+                "Search URL verification"
+            )
             self.logger.info("Search completed successfully")
             return True
             
@@ -188,6 +234,13 @@ class LectraTestAutomation:
         if lectra_link and self._safe_click(lectra_link, "Lectra website link"):
             try:
                 self.wait.until(EC.url_contains("lectra"))
+
+                # Verify we're on Lectra domain
+                self.assert_condition(
+                    "lectra.com" in self.driver.current_url,
+                    "Lectra website URL verification"
+                )
+
                 self.logger.info(f"Successfully navigated to: {self.driver.current_url}")
                 return True
             except TimeoutException:
@@ -207,7 +260,16 @@ class LectraTestAutomation:
         
         cookie_button = self._find_element_by_selectors(selectors, "Lectra cookie consent")
         if cookie_button:
-            return self._safe_click(cookie_button, "Lectra cookie consent")
+            success = self._safe_click(cookie_button, "Lectra cookie consent")
+            if success:
+                # Verify cookie modal disappeared
+                time.sleep(2)
+                cookie_elements = self.driver.find_elements(By.ID, "ppms_cm_agree-to-all")
+                self.assert_condition(
+                    len(cookie_elements) == 0,
+                    "Lectra cookie removal verification"
+                )
+            return success
         else:
             self.logger.info("No Lectra cookie consent found or already handled")
             return True
@@ -215,12 +277,8 @@ class LectraTestAutomation:
     def step_6_switch_to_english(self):
         """Step 5: Switch language to English."""
         self.logger.info("=== Step 5: Switching to English ===")
-        
-        # # Check if already in English
-        # if '/en/' in self.driver.current_url or '/en' in self.driver.current_url:
-        #     self.logger.info("Site is already in English")
-        #     return True
-        
+
+
         # Click Languages button
         language_selectors = [
             '//*[@id="block-lectra-b5-languageswitcherinterfacetext-2"]/button',
@@ -243,6 +301,13 @@ class LectraTestAutomation:
         english_link = self._find_element_by_selectors(english_selectors, "English language option")
         if english_link and self._safe_click(english_link, "English language"):
             self._human_like_delay()
+
+            # Verify language switch
+            self.assert_condition(
+                "/en" in self.driver.current_url or "/en/" in self.driver.current_url,
+                "English language URL verification"
+            )
+
             self.logger.info(f"Language switched. Current URL: {self.driver.current_url}")
             return True
         return False
@@ -271,6 +336,13 @@ class LectraTestAutomation:
         lectra_fashion_link = self._find_element_by_selectors(lectra_fashion_selectors, "Lectra & Fashion link")
         if lectra_fashion_link and self._safe_click(lectra_fashion_link, "Lectra & Fashion"):
             self._human_like_delay()
+
+            # Verify navigation to fashion page
+            self.assert_condition(
+                "/fashion" in self.driver.current_url,
+                "Fashion page URL verification"
+            )
+
             self.logger.info(f"Navigated to Fashion page: {self.driver.current_url}")
             return True
         return False
@@ -330,6 +402,13 @@ class LectraTestAutomation:
         discover_link = self._find_element_by_selectors(discover_selectors, "Discover Lectra link")
         if discover_link and self._safe_click(discover_link, "Discover Lectra"):
             self._human_like_delay()
+
+            # Verify navigation to Discover Lectra page
+            self.assert_condition(
+                "/discover-lectra" in self.driver.current_url,
+                "Discover Lectra page URL verification"
+            )
+
             self.logger.info(f"Navigated to Discover Lectra: {self.driver.current_url}")
             return True
         return False
@@ -378,9 +457,9 @@ class LectraTestAutomation:
         
         # Handle potential new tab
         self._human_like_delay()
-        return self._switch_to_careers_tab()
+        return self.switch_to_careers_tab()
     
-    def _switch_to_careers_tab(self):
+    def switch_to_careers_tab(self):
         """Switch to careers tab if opened in new window."""
         all_windows = self.driver.window_handles
         if len(all_windows) > 1:
@@ -431,6 +510,13 @@ class LectraTestAutomation:
         try:
             self.wait.until(EC.presence_of_element_located((By.ID, "searchresults")))
             self._human_like_delay()
+
+            # Verify results contain job listings
+            job_rows = self.driver.find_elements(By.XPATH, '//table[@id="searchresults"]//tbody/tr')
+            self.assert_condition(
+                len(job_rows) > 0,
+                "Job listings presence verification"
+            )
             
             first_job_selectors = [
                 '//table[@id="searchresults"]//tbody/tr[1]/td[@class="colTitle"]'
@@ -440,13 +526,26 @@ class LectraTestAutomation:
             if first_job and self._safe_click(first_job, "First job opportunity"):
                 self._human_like_delay()
                 
+                # Verify job details URL contains job identifier
+                self.assert_condition(
+                    "job" in self.driver.current_url,
+                    "Job details URL verification"
+                )
                 
                 # Close job details tab and return to original
                 self._human_like_delay()
                 self.logger.info("Closing job details tab...")
                 self.driver.close()
                 self.driver.switch_to.window(self.original_window)
+
+                # Verify return to original window
+                self.assert_condition(
+                    "careers.lectra.com" not in self.driver.current_url,
+                    "Return to original tab verification"
+                )
+
                 self.logger.info("Returned to original tab")
+                
                 return True
                 
         except Exception as e:
