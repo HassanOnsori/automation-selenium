@@ -175,9 +175,8 @@ class LectraTestAutomation:
         if cookie_button:
             success = self._safe_click(cookie_button, "Google cookie consent")
             if success:
-                    # Verify cookie banner is gone
                     time.sleep(1)
-                    # Verify search box is present
+                    # Verify cookie banner is gone and search box is present
                     search_box = self.wait.until(EC.presence_of_element_located((By.NAME, "q")))
                     self.assert_condition(
                         search_box is not None,
@@ -262,7 +261,7 @@ class LectraTestAutomation:
         if cookie_button:
             success = self._safe_click(cookie_button, "Lectra cookie consent")
             if success:
-                # Verify cookie modal disappeared
+                # Verify cookie disappeared
                 time.sleep(2)
                 cookie_elements = self.driver.find_elements(By.ID, "ppms_cm_agree-to-all")
                 self.assert_condition(
@@ -600,7 +599,7 @@ class LectraTestAutomation:
         """Clean up resources."""
         if self.driver:
             self.logger.info("Cleaning up - browser will remain open for review")
-            # Uncomment next line if you want to close browser automatically
+            # Uncomment next line to close browser automatically
             # self.driver.quit()
 
 
