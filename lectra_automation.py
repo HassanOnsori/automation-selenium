@@ -518,6 +518,7 @@ class LectraTestAutomation:
             )
             
             first_job_selectors = [
+                '(//*[@class="jobTitle-link"])[1]',
                 '//table[@id="searchresults"]//tbody/tr[1]/td[@class="colTitle"]'
             ]
             
