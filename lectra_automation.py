@@ -497,8 +497,8 @@ class LectraTestAutomation:
         
         # Click Search jobs
         search_selectors = [
-            '//*[@id="search-wrapper"]/div/form/div/div/div[2]/div[2]/div[1]/input',  
-            '//input[@type="submit" and @class="btn keywordsearch-button" and @value="Search jobs"]'
+            '//*[@class="search displayDT"]//input[@type="submit" and @class="btn keywordsearch-button" and @value="Search jobs"]',
+            '//*[@id="search-wrapper"]/div/form/div/div/div[2]/div[2]/div[1]/input'
         ]
         
         search_button = self._find_element_by_selectors(search_selectors, "Search jobs button")
